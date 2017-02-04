@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}" />
+    <title>{% block head_title %}Welcome to sh7ata Blog{% endblock %}</title>
+  </head>
+  <body>
+    <h1 id="site-name">
+          {% block branding %}<a href="{% url 'admin:index' %}">Sh7ata Blog</a>
+          {% endblock %}
+    </h1>
+    <div class="content">
+      {% block content %}
+        {% autoescape off %}
+        {% endautoescape %}
+      {% endblock %}
+
+    </div>
+  </body>
+</html>
