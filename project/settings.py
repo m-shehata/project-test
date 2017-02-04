@@ -20,7 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 SECRET_KEY = 'eth@&xod#-y9j9&+1jmvn#6+zs*qod(uia*3b4@nbwswpfnmyu'
+=======
+SECRET_KEY = 'bw60lkr5agx_zsn=2nys(zheyo&ngomx@^kt1rry%0biw=0ivp'
+>>>>>>> f057febf5a5b20f21b8520b207b0f6d71161ae2a
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+=======
+    'blog',
+>>>>>>> f057febf5a5b20f21b8520b207b0f6d71161ae2a
 ]
 
 MIDDLEWARE = [
@@ -77,8 +85,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
+<<<<<<< HEAD
         'USER':'blog',
         'PASSWOURD':'123456'
+=======
+        'USER': 'mohamed',
+        'PASSWORD': '123456'
+>>>>>>> f057febf5a5b20f21b8520b207b0f6d71161ae2a
     }
 }
 
