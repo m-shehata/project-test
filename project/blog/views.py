@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response, get_object_or_404
-from models import Posts,Categories
-
+from models import Posts,Categories,Comment_Section,Inappropriate_words
+from .forms import Comment_Form
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 
@@ -27,5 +28,24 @@ def view_post(request,slug):
 	post= Posts.objects.get(slug=slug)
 	context = {'post':post}
 	return render(request,'blog/posts.html',context)
+
+
+def new_Comment(request):
+	form = Comment_Form()
+	if request.method == "POST":
+		form = Comment_Form(request.POST)
+		if form.is_valid():
+			obj=form.save()
+			obj.check_comment()
+			return HttpResponseRedirect('/blog/comments')
+	context={'com_form':form}
+	return render(request, 'blog/newCommentForm.html', {'com_form':form})
+
+def view_all_comments(request):
+	return render(request,'blog/all_comments.html')
+
+
+
+
 
 

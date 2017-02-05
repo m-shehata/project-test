@@ -39,3 +39,33 @@ class Posts(models.Model):
 	def get_absolute_url(self):
 		return ('view_blog_post', None, { 'slug': self.slug })
 
+class Comment_Section (models.Model):
+	comment_descr=models.CharField(max_length=1000,default='no comment')
+	comment_date=models.DateTimeField(auto_now=True)
+	comment_usrname=models.CharField(max_length=100)
+	comment_reply=models.CharField(max_length=2000)
+	comment_post=models.ForeignKey(Postes)
+
+	def check_comment (self):
+		inappr_obj=Inappropriate_words.objects.all()
+		temp=""
+		lst=self.comment_descr.split()
+		for word in lst:
+			for inappr in inappr_obj:
+				print word,inappr
+				if word == inappr.inappr_wrd:
+					word=len(word)*"*"
+					break
+
+			temp+=" "
+			temp+=word
+		self.comment_descr=temp
+		self.save()
+
+
+
+class Inappropriate_words(models.Model):
+	inappr_wrd=models.CharField(max_length=200)
+	def __str__(self):
+		return self.inappr_wrd
+
