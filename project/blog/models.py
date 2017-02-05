@@ -44,7 +44,7 @@ class Comment_Section (models.Model):
 	comment_date=models.DateTimeField(auto_now=True)
 	comment_usrname=models.CharField(max_length=100)
 	comment_reply=models.CharField(max_length=2000)
-	comment_post=models.ForeignKey(Postes)
+	comment_post=models.ForeignKey(Posts)
 
 	def check_comment (self):
 		inappr_obj=Inappropriate_words.objects.all()
