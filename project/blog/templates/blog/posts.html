@@ -1,0 +1,8 @@
+posts
+<ul>
+{% for p in all_posts %}
+	<li> {{ p.post_title }} </li>
+	<li><img src="{{MEDIA_URL}}{{ p.image }}"/> {{ p.image }}</li>
+
+{% endfor %}
+</ul>
