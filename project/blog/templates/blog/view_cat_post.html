@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Categories</title>
+</head>
+<body>
+	<ul> {{ category.cat_name }}  
+	{% for p in post %}
+		<li> {{ p.post_title }} </li>
+		{% endfor %}
+	</ul>	
+</body>
+</html>
