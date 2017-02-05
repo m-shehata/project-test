@@ -12,7 +12,7 @@ from models import Posts,Categories
 
 
 
-def cat_posts(request,slug):
+def view_cat_post(request,slug):
 	cat = get_object_or_404(Categories, cat_slug = slug)
 	post = get_object_or_404(Posts, slug = slug)
 	context = {'category':cat , 'post':post}

@@ -29,7 +29,7 @@ class Posts(models.Model):
 	slug=models.SlugField(max_length=200)
 	post_body =models.TextField()
 	image =models.ImageField()
-	#category_id =models.ForeignKey(Category)
+	category_id =models.ForeignKey(Categories)
 	publish_date =models.DateTimeField('reg_date')
 	approve =models.BooleanField()
 
