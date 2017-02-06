@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import render_to_response, get_object_or_404
 from models import Posts,Categories,Comment_Section,Inappropriate_words
-from .forms import Comment_Form
+from .forms import Comment_Form 
+from .forms import Post_Form 
 from django.http import HttpResponseRedirect, HttpResponse
-
+from django.utils import timezone
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 
 # def view_categories(request):
@@ -21,8 +23,15 @@ def view_cat_post(request,slug):
 
 def view_all_post(request):
 	all_posts= Posts.objects.all()
-	context ={'all_posts':all_posts}
-	return render(request,'blog/posts.html',context)
+	paginator=Paginator(all_posts,3)
+	page =request.GET.get('page')
+	try:
+		context =paginator.page(page)
+	except PageNotAnInteger:
+		context =paginator.page(1)
+	except EmptyPage:
+		context =paginator.page(paginator.num_pages)
+	return render(request,'blog/posts.html',{'context':context})
 
 def view_post(request,slug):
 	post= Posts.objects.get(slug=slug)
@@ -45,7 +54,39 @@ def view_all_comments(request):
 	return render(request,'blog/all_comments.html')
 
 
+def view_edit_post(request,slug):
+	post=get_object_or_404(Posts,slug=slug)
+	#prepopulated_fields = {'slug':('post_title',)}
+	if request.method == "POST":
+		form=Post_Form(request.POST,instance=post)
+		if form.is_valid():
+			post=form.save(commit=False)
+			#post.auther=request.user
+			post.publish_date=timezone.now()
+			
+			post.save()
+			return redirect('view_top_post')
+	form=Post_Form(instance=post)
+	context={'post_form':form}
+	return render(request,'blog/postform.html',context)
 
+
+def view_new_post(request):
+	if request.method == 'POST':
+		form=Post_Form(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('view_top_post')
+	form=Post_Form()
+	context={'post_form':form}
+	return render(request,'blog/postform.html',context)
+
+
+def view_delete_post(request,slug):
+	post=Posts.objects.get(slug=slug)
+	Comment_Section.objects.filter(comment_post=post.id).delete()
+	post.delete()
+	return redirect('view_top_post')
 
 
 

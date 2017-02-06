@@ -1,8 +1,30 @@
 posts
 <ul>
-{% for p in all_posts %}
+{% for p in context %}
 	<li> {{ p.post_title }} </li>
 	<li><img src="{{MEDIA_URL}}{{ p.image }}"/> {{ p.image }}</li>
-
+	<a href="{% url 'view_edit_post' slug=p.slug %}"> Edit </a>
+	<a href="{% url 'view_delete_post' slug=p.slug %}"> delete </a>
 {% endfor %}
 </ul>
+<a href="{% url 'view_new_post'  %}"> ADD new post</a>
+<br>
+<br>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if context.has_previous %}
+            <a href="?page={{ context.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ context.number }} of {{ context.paginator.num_pages }}.
+        </span>
+
+        {% if context.has_next %}
+            <a href="?page={{ context.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+
