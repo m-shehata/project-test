@@ -52,13 +52,12 @@ class Comment_Section (models.Model):
 		lst=self.comment_descr.split()
 		for word in lst:
 			for inappr in inappr_obj:
-				print word,inappr
 				if word == inappr.inappr_wrd:
 					word=len(word)*"*"
 					break
 
-			temp+=" "
 			temp+=word
+			temp+=" "
 		self.comment_descr=temp
 		self.save()
 
